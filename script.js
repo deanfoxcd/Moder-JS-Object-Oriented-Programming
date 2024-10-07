@@ -162,26 +162,28 @@ PersonCL.hey();
 // 3. Classes are executed in strict mode
 */
 
-// ** Coding Challenge #1 with Classes** (my own practice) Also Challenge #2
-/*
+// ** Coding Challenge #1 with Classes** (my own practice) Also Challenge #2 & #4
+
 class CarCL {
   constructor(make, speed) {
     this.make = make;
     this.speed = speed;
   }
 
-  changeSpeed(change) {
-    this.speed += change;
+  //   changeSpeed(change) {
+  //     this.speed += change;
+  //     console.log(`The ${this.make} is now travelling at ${this.speed} km/h`);
+  //     return this;
+  //   }
+  accelerate() {
+    this.speed += 10;
     console.log(`The ${this.make} is now travelling at ${this.speed} km/h`);
   }
-  //   accelerate() {
-  //     this.speed += 10;
-  //     console.log(`The ${this.make} is now travelling at ${this.speed} km/h`);
-  //   }
-  //   brake() {
-  //     this.speed -= 5;
-  //     console.log(`The ${this.make} is now travelling at ${this.speed} km/h`);
-  //   }
+  brake() {
+    this.speed -= 5;
+    console.log(`The ${this.make} is now travelling at ${this.speed} km/h`);
+    return this;
+  }
 
   get speedUS() {
     return `${this.speed / 1.6} mph`;
@@ -196,15 +198,43 @@ const car1cl = new CarCL('BMW', 120);
 const car2cl = new CarCL('Mercedes', 95);
 const ford = new CarCL('Ford', 120);
 
+class EVCl extends CarCL {
+  #charge;
+  constructor(make, model, charge) {
+    super(make, model);
+    this.#charge = charge;
+  }
+
+  chargeBattery(chargeTo) {
+    this.#charge = chargeTo;
+    console.log(`Battery is at ${this.#charge}%`);
+    return this;
+  }
+  accelerate() {
+    this.speed += 20;
+    this.#charge--;
+    console.log(
+      `The ${this.make} is now travelling at ${
+        this.speed
+      } km/h. Battery is at ${this.#charge}%`
+    );
+    return this;
+  }
+}
+
+const rivian = new EVCl('Rivian', 100, 50);
+
+console.log(rivian);
+rivian.accelerate().accelerate().brake().chargeBattery(80).brake().accelerate();
+
 ford.speedUS = 100;
-console.log(ford);
+// console.log(ford);
 
 // car1cl.accelerate();
 // car1cl.accelerate();
 // car1cl.brake();
 // car2cl.changeSpeed(20);
 // car2cl.changeSpeed(-70);
-*/
 
 // Getters and Setters
 /*
@@ -383,4 +413,87 @@ jay.init('Jay', 2013, 'Psychology');
 console.log(jay);
 jay.introduce();
 jay.calcAge();
+*/
+
+//Another Class Example w/ Encapsulation (incl. class fields and methods)
+/*
+
+// Public fields
+// Private fields
+// Public methods
+// Private methods
+// There is also the static versions of these
+
+class Account {
+  // Public Fields (on the instance, not the prototype)
+  locale = navigator.language;
+
+  // Private Fields (on the instance, not the prototype)
+  #movements = [];
+  #pin; // Declared here so that it can be used in the constructor
+
+  constructor(owner, currency, pin) {
+    this.owner = owner;
+    this.currency = currency;
+    this.#pin = pin;
+    // Protected property but still technically accessible
+    // this._pin = pin;
+    // this._movements = [];
+    // this.locale = navigator.locale;
+
+    console.log(`Thanks for opening a new account ${owner}`);
+  }
+
+  // Public Methods
+  // Public Interface
+  getMovements() {
+    return this.#movements;
+  }
+
+  deposit(val) {
+    this.#movements.push(val);
+    return this;
+  }
+
+  withdraw(val) {
+    this.deposit(-val);
+    return this;
+  }
+
+  _approveLoan(val) {
+    return true;
+  }
+
+  requestLoan(val) {
+    if (this._approveLoan(val)) {
+      this.deposit(val);
+      console.log('Loan Approved');
+    }
+    return this;
+  }
+
+  // Private Methods (not yet working)
+  //   #approveLoan(val) {
+  //     return true;
+  //   }
+}
+
+const acc1 = new Account('Dean', 'USD', 1111);
+
+//This will work but it's not a good idea
+// acc1.movements.push(200)
+// acc1.movements.push(-100)
+
+// This is better
+acc1.deposit(200);
+acc1.withdraw(100);
+acc1.requestLoan(1000);
+console.log(acc1);
+// console.log(acc1.#movements); // Won't work
+console.log(acc1.getMovements()); // Still works
+// console.log(acc1.#pin); // Won't work
+
+// Chaining (need to add 'return this' to the methods)
+acc1.deposit(300).deposit(500).withdraw(35).requestLoan(5000).withdraw(2000);
+console.log(acc1.getMovements());
 */
