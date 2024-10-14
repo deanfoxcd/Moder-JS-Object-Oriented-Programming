@@ -54,7 +54,7 @@ Array.prototype.unique = function () {
 
 console.log(arr.unique());
 
-const h1 = document.querySelector('h1')
+const h1 = document.querySelector('h1');
 */
 
 // ** Coding Challenge #1 & #3**
@@ -163,7 +163,7 @@ PersonCL.hey();
 */
 
 // ** Coding Challenge #1 with Classes** (my own practice) Also Challenge #2 & #4
-
+/*
 class CarCL {
   constructor(make, speed) {
     this.make = make;
@@ -235,6 +235,8 @@ ford.speedUS = 100;
 // car1cl.brake();
 // car2cl.changeSpeed(20);
 // car2cl.changeSpeed(-70);
+
+*/
 
 // Getters and Setters
 /*
